@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikox Boost PH</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Poppins, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #050713;
+            color: white;
+        }
+
+        /* RGB ANIMATION */
+        @keyframes rgbflow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* GREEN TO YELLOW-GREEN GRADIENT FLOW */
+        @keyframes greenFlow {
+            0% {
+                background-color: #00ff66;
+                box-shadow: 0 0 8px #00ff66;
+            }
+            50% {
+                background-color: #adff2f;
+                box-shadow: 0 0 14px #adff2f;
+            }
+            100% {
+                background-color: #00ff66;
+                box-shadow: 0 0 8px #00ff66;
+            }
+        }
+
+        /* HEADER */
+        header {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 24px;
+            position: sticky;
+            top: 0;
+            background: #050713ee;
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: lowercase;
+            white-space: nowrap;
+        }
+
+        /* CLICKABLE BRAND IMAGE STYLING */
+        .brand img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .brand img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+        }
+
+        .brand span {
+            background: linear-gradient(90deg, #ff00cc, #00ffff, #0066ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-left: -2px;
+        }
+
+        /* ACTIONS CONTAINER */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* FACEBOOK BUTTON */
+        .fb {
+            background: #0066ff;
+            padding: 10px 18px;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .fb:hover {
+            background: #0052cc;
+        }
+
+        .fb-icon {
+            background: white;
+            color: #0066ff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-family: sans-serif;
+            font-weight: 900;
+        }
+
+        /* HAMBURGER */
+        .menuBtn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .menuBtn span {
+            width: 20px;
+            height: 2px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 85px;
+            background: #10162d;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            background-image: linear-gradient(#10162d,#10162d), linear-gradient(270deg, red, cyan, blue, magenta);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            width: 200px;
+            z-index: 1000;
+        }
+
+        .menu a {
+            display: block;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 60px 30px;
+        }
+
+        /* CLICKABLE RGB LOGO WRAPPER */
+        .profile-wrapper {
+            padding: 6px;
+            border-radius: 50%;
+            background: linear-gradient(270deg, red, orange, yellow, green, cyan, blue, violet, red);
+            background-size: 800% 800%;
+            animation: rgbflow 6s linear infinite;
+            box-shadow: 0 0 30px #00ffff;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .profile-wrapper:hover {
+            transform: scale(1.03);
+        }
+
+        .heroLogo {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* FULLSCREEN LOGO MODAL / OVERLAY OVER ALL MODULES */
+        .image-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 7, 19, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .overlay-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
+            object-fit: contain;
+        }
+
+        .close-overlay {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .close-overlay:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* HERO TEXT ELEMENTS WITH ANIMATED GREEN BADGE */
+        .online {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            border-radius: 30px;
+            border: 1px solid #0066ff;
+            color: #66aaff;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .online-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #00ff66;
+            display: inline-block;
+            animation: greenFlow 3s ease-in-out infinite;
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            color: #1680ff;
+        }
+
+        .hero-banner-text {
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 500;
+            margin-top: 20px;
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        .hero-risk-free {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+        }
+
+        .hero p {
+            margin-bottom: 25px;
+            max-width: 520px;
+            font-size: 16px;
+            color: #b6c0df;
+            line-height: 1.6;
+        }
+
+        /* RGB GRADIENT BUTTONS WITH HOVER EFFECTS */
+        .big {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 40px;
+            background: linear-gradient(270deg, #ff00cc, #00ffff, #0066ff, #ff00cc);
+            background-size: 400% 400%;
+            animation: rgbflow 6s linear infinite;
+            border-radius: 40px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .big:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.5);
+        }
+
+        .btn-fb-icon {
+            background: white;
+            color: #0066ff;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-family: sans-serif;
+            font-weight: 900;
+        }
+
+        /* STATS WITH EMOJIS */
+        .stats {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .stat {
+            background: #10162d;
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            border: 1px solid #303d70;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-emoji {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .stat h2 {
+            font-size: 35px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .stat p {
+            color: #b6c0df;
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+        /* SERVICES */
+        .title {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 40px;
+        }
+
+        .sub {
+            text-align: center;
+            color: #aaa;
+        }
+
+        .services {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: #090f22;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #304cff;
+        }
+
+        .card h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            background: white;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .card-icon.fb-blue { color: #0066ff; }
+        .card-icon.ig-pink { color: #e1306c; }
+        .card-icon.tt-dark { color: #000000; }
+
+        .card li {
+            list-style: none;
+            padding: 8px;
+            color: #cbd3ef;
+        }
+
+        /* WHY */
+        .why {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 35px;
+            background: #080d1c;
+            border-radius: 25px;
+            border: 1px solid #303d70;
+        }
+
+        .why h2 {
+            text-align: center;
+            font-size: 35px;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .features div {
+            background: #10162d;
+            padding: 20px;
+            border-radius: 18px;
+            text-align: center;
+            border: 1px solid #304cff;
+            font-size: 25px;
+        }
+
+        .features h3 {
+            font-size: 17px;
+        }
+
+        .features p {
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        /* READY TO GROW CALL-TO-ACTION CARD SECTION */
+        .cta-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, #0b122c 0%, #060a1a 100%);
+            border: 1px solid rgba(48, 76, 255, 0.3);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .cta-card h2 {
+            font-size: 42px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .cta-card p {
+            font-size: 18px;
+            color: #8fa0ce;
+            max-width: 600px;
+            margin: 0 auto 35px auto;
+            line-height: 1.7;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(270deg, #ff00cc, #00ffff, #0066ff, #ff00cc);
+            background-size: 400% 400%;
+            animation: rgbflow 6s linear infinite;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 16px 45px;
+            border-radius: 40px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.5);
+        }
+
+        /* FOOTER MODULE */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 60px 20px 40px 20px;
+            text-align: center;
+            background: #040610;
+        }
+
+        .footer-brand {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .footer-rgb-text {
+            background: linear-gradient(270deg, #ff00cc, #00ffff, #0066ff, #ff00cc);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: rgbflow 6s linear infinite;
+        }
+
+        .footer-brand span.white-text {
+            color: #ffffff;
+        }
+
+        .footer-sub {
+            font-size: 16px;
+            color: #8fa0ce;
+            margin-bottom: 25px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-glow-line {
+            width: 120px;
+            height: 3px;
+            margin: 0 auto 25px auto;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #ff00cc, #00ffff, #0066ff);
+            background-size: 200% 200%;
+            animation: rgbflow 4s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            color: #637199;
+            letter-spacing: 0.3px;
+        }
+
+        /* MOBILE RESPONSIVE ADJUSTMENTS */
+        @media(max-width:800px){
+            header {
+                padding: 15px 12px;
+            }
+
+            .brand {
+                font-size: 15px;
+            }
+
+            .brand img {
+                width: 42px;
+                height: 42px;
+            }
+
+            .fb {
+                padding: 9px 14px;
+                font-size: 13px;
+                gap: 6px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 45px 20px;
+            }
+
+            .profile-wrapper {
+                margin-bottom: 10px;
+                order: 1;
+            }
+
+            .hero > div:last-child {
+                order: 2;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .heroLogo {
+                width: 180px;
+                height: 180px;
+            }
+
+            .hero h1 {
+                font-size: 44px;
+            }
+
+            .hero-banner-text {
+                font-size: 14px;
+            }
+
+            .hero-risk-free {
+                font-size: 18px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .stat h2 {
+                font-size: 28px;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .why h2 {
+                font-size: 28px;
+            }
+
+            .cta-card {
+                padding: 40px 20px;
+                border-radius: 24px;
+            }
+
+            .cta-card h2 {
+                font-size: 32px;
+            }
+
+            .cta-card p {
+                font-size: 15px;
+            }
+
+            .cta-btn {
+                font-size: 16px;
+                padding: 14px 30px;
+                width: 100%;
+            }
+
+            .footer-brand {
+                font-size: 24px;
+            }
+            .footer-sub {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="bg-music" loop></audio>
+
+    <div class="image-overlay" id="logoOverlay" onclick="closeLogoView()">
+        <div class="overlay-content" onclick="event.stopPropagation()">
+            <button class="close-overlay" onclick="closeLogoView()">&times;</button>
+            <img src="https://i.imgur.com/rFiipM8_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="Expanded Logo">
+        </div>
+    </div>
+
+    <header>
+        <div class="brand">
+            <img src="https://i.imgur.com/rFiipM8_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="Logo" onclick="openLogoView()">
+            nikox <span>boost ph</span>
+        </div>
+
+        <div class="header-actions">
+            <a class="fb" href="https://www.facebook.com/share/1DMFdHQpSX/" target="_blank">
+                <span class="fb-icon">f</span> Message Us
+            </a>
+
+            <button class="menuBtn" onclick="menuToggle()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu" id="menu">
+        <a href="#home">🏠 Home</a>
+        <a href="#services">🚀 Services</a>
+        <a href="#why">⭐ Why Choose</a>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="profile-wrapper" onclick="openLogoView()">
+            <img src="https://i.imgur.com/JFPQA7Z_d.png?maxwidth=520&shape=thumb&fidelity=line-height" class="heroLogo">
+        </div>
+
+        <div>
+            <div class="online">
+                <span class="online-dot"></span> Now Serving Clients Nationwide
+            </div>
+
+            <h1>
+                GROW <br>
+                YOUR <span>SOCIAL</span> <br>
+                PRESENCE
+            </h1>
+
+            <div class="hero-banner-text">
+                We Amplify Likes, Views, Shares, and Followers Across All Platforms!
+            </div>
+            
+            <div class="hero-risk-free">
+                Boost Your Social Media - Risk Free!
+            </div>
+
+            <p>
+                Fast, safe, and affordable boosting services for Facebook, Instagram, TikTok and more platforms.
+            </p>
+
+            <a class="big" href="https://www.facebook.com/share/1DMFdHQpSX/" target="_blank">
+                <span class="btn-fb-icon">f</span> Message Us Now
+            </a>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-emoji">🌐</div>
+            <h2>17+</h2>
+            <p>Platforms</p>
+        </div>
+        <div class="stat">
+            <div class="stat-emoji">🛡️</div>
+            <h2>100%</h2>
+            <p>Safe</p>
+        </div>
+        <div class="stat">
+            <div class="stat-emoji">⚡</div>
+            <h2>24/7</h2>
+            <p>Support</p>
+        </div>
+        <div class="stat">
+            <div class="stat-emoji">🚀</div>
+            <h2>FAST</h2>
+            <p>Delivery</p>
+        </div>
+    </div>
+
+    <h1 class="title" id="services">
+        OUR CORE SERVICES
+    </h1>
+    <p class="sub">
+        Premium boosting services
+    </p>
+
+    <div class="services">
+        <div class="card">
+            <h2>
+                <span class="card-icon fb-blue">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </span> 
+                FACEBOOK
+            </h2>
+            <li>✔ Followers</li>
+            <li>✔ Reacts</li>
+            <li>✔ Shares</li>
+            <li>✔ Views</li>
+        </div>
+
+        <div class="card">
+            <h2>
+                <span class="card-icon ig-pink">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                </span> 
+                INSTAGRAM
+            </h2>
+            <li>✔ Followers</li>
+            <li>✔ Likes</li>
+            <li>✔ Views</li>
+        </div>
+
+        <div class="card">
+            <h2>
+                <span class="card-icon tt-dark">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.94 1.15 2.27 1.95 3.71 2.27V10.3c-1.16-.05-2.3-.39-3.32-.96-.86-.49-1.61-1.18-2.17-2 .01 2.52-.01 5.03.01 7.55-.02 1.4-.33 2.79-1.01 4.03-.76 1.42-1.99 2.56-3.48 3.22-1.4.65-2.98.88-4.49.59-1.62-.29-3.14-1.17-4.22-2.41-1.15-1.31-1.78-3.01-1.74-4.75-.02-1.85.69-3.66 1.98-4.96 1.39-1.4 3.35-2.21 5.32-2.1 1.46.06 2.88.59 4.02 1.53V.02z"/></svg>
+                </span> 
+                TIKTOK
+            </h2>
+            <li>✔ Followers</li>
+            <li>✔ Likes</li>
+            <li>✔ Shares</li>
+        </div>
+    </div>
+
+    <section class="why" id="why">
+        <h2>What Makes Us Different</h2>
+        <div class="features">
+            <div>🚀<h3>Fast Delivery</h3></div>
+            <div>🔒<h3>Safe Methods</h3></div>
+            <div>💙<h3>24/7 Support</h3></div>
+            <div>⭐<h3>Affordable</h3></div>
+        </div>
+    </section>
+
+    <div class="cta-container">
+        <div class="cta-card">
+            <h2>Ready to Grow?</h2>
+            <p>Message us on Facebook now and let's talk about the best service for your needs. Fast response, guaranteed.</p>
+            <a href="https://www.facebook.com/share/1DMFdHQpSX/" target="_blank" class="cta-btn">
+                <span class="btn-fb-icon">f</span> Get Your Free Consultation
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-brand">
+            <span class="footer-rgb-text">Nikox Boost PH</span> <span class="white-text">Boosting Services</span>
+        </div>
+        <div class="footer-sub">
+            Fast • Safe • Affordable Social Media Boosting
+        </div>
+        <div class="footer-glow-line"></div>
+        <div class="footer-copyright">
+            © 2026 Nikox Boost PH Boosting Services. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        function menuToggle(){
+            let m = document.getElementById("menu");
+            m.style.display = (m.style.display === "block") ? "none" : "block";
+        }
+
+        /* OVERLAY CONTROL SCRIPT OBJECT CORES */
+        function openLogoView() {
+            let overlay = document.getElementById("logoOverlay");
+            overlay.style.display = "flex";
+            setTimeout(() => {
+                overlay.classList.add("active");
+            }, 10);
+        }
+
+        function closeLogoView() {
+            let overlay = document.getElementById("logoOverlay");
+            overlay.classList.remove("active");
+            setTimeout(() => {
+                overlay.style.display = "none";
+            }, 300);
+        }
+
+        // DYNAMIC MUSIC STREAM INJECTOR
+        let musicStarted = false;
+
+        async function initAudioStream() {
+            if (musicStarted) return;
+            musicStarted = true;
+
+            const audioElement = document.getElementById('bg-music');
+            
+            try {
+                const response = await fetch('https://yt-dlp-stream.onrender.com/api/v2/q?=comethru');
+                const data = await response.json();
+                
+                if(data && data.media && data.media.mp3) {
+                    audioElement.src = data.media.mp3;
+                    audioElement.volume = 0.5;
+                    await audioElement.play();
+                }
+            } catch (error) {
+                console.log('Autoplay request handled or network execution failed:', error);
+                musicStarted = false; 
+            }
+        }
+
+        document.addEventListener('click', initAudioStream, { once: true });
+        document.addEventListener('touchstart', initAudioStream, { once: true });
+    </script>
+
+</body>
+</html>
